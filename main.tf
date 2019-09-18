@@ -255,10 +255,10 @@ resource "aws_autoscaling_group" "bastion_auto_scaling_group" {
     "OldestLaunchConfiguration",
   ]
 
-  tags = ["${concat(
+  tags = concat(
       list(map("key", "Name", "value", "ASG-${aws_launch_configuration.bastion_launch_configuration.name}", "propagate_at_launch", true)),
       local.tags_asg_format
-   )}"]
+   )
 
   lifecycle {
     create_before_destroy = true
