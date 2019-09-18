@@ -66,7 +66,7 @@ resource "aws_security_group_rule" "ingress_bastion" {
   from_port   = "${var.public_ssh_port}"
   to_port     = "${var.public_ssh_port}"
   protocol    = "TCP"
-  cidr_blocks = ["${concat(data.aws_subnet.subnets.*.cidr_block, var.cidrs)}"]
+  cidr_blocks = concat(data.aws_subnet.subnets.*.cidr_block, var.cidrs)
 
   security_group_id = "${aws_security_group.bastion_host_security_group.id}"
 }
@@ -255,10 +255,10 @@ resource "aws_autoscaling_group" "bastion_auto_scaling_group" {
     "OldestLaunchConfiguration",
   ]
 
-  tags = concat(
-      list(map("key", "Name", "value", "ASG-${aws_launch_configuration.bastion_launch_configuration.name}", "propagate_at_launch", true)),
-      local.tags_asg_format
-   )
+  # tags = concat(
+  #     list(map("key", "Name", "value", "ASG-${aws_launch_configuration.bastion_launch_configuration.name}", "propagate_at_launch", true)),
+  #     local.tags_asg_format
+  #  )
 
   lifecycle {
     create_before_destroy = true
