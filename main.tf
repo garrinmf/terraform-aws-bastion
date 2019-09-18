@@ -23,7 +23,7 @@ resource "aws_s3_bucket" "bucket" {
 
     prefix = "logs/"
 
-    tags {
+    tags = {
       "rule"      = "log"
       "autoclean" = "${var.log_auto_clean}"
     }
