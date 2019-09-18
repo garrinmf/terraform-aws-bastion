@@ -201,7 +201,7 @@ resource "aws_lb_target_group" "bastion_lb_target_group" {
 }
 
 resource "aws_lb_listener" "bastion_lb_listener_22" {
-  "default_action" {
+  default_action {
     target_group_arn = "${aws_lb_target_group.bastion_lb_target_group.arn}"
     type             = "forward"
   }
