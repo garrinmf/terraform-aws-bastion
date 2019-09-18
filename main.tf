@@ -177,9 +177,7 @@ resource "aws_lb" "bastion_lb" {
   internal = "${var.is_lb_private}"
   name     = "${local.name_prefix}-lb"
 
-  subnets = [
-    "${var.elb_subnets}",
-  ]
+  subnets = var.elb_subnets
 
   load_balancer_type = "network"
   tags               = "${merge(var.tags)}"
@@ -243,9 +241,7 @@ resource "aws_autoscaling_group" "bastion_auto_scaling_group" {
   min_size             = "${var.bastion_instance_count}"
   desired_capacity     = "${var.bastion_instance_count}"
 
-  vpc_zone_identifier = [
-    "${var.auto_scaling_group_subnets}",
-  ]
+  vpc_zone_identifier = var.auto_scaling_group_subnets
 
   default_cooldown          = 180
   health_check_grace_period = 180
